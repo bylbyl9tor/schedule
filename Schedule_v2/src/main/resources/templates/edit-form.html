@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>EDIT PAGE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form th:action="@{/login}" method="get">
+    <input type="submit" value="Sign Out"/>
+</form>
+<table>
+    <form name="search-theme-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+          id="search-theme-form"
+          th:object="${schedule}" method='POST'>
+        <input type="hidden" name="id" th:value="${rows.id}"/>
+        <td>
+            <select id="dropdown_faculty" th:field="*{facultyName}">
+                <option th:text="${choosenFaculty}" th:value="${choosenFaculty}"></option>
+            </select>
+        </td>
+        <td>
+            <select id="dropdown_specialty" th:field="*{specialtyName}">
+                <option th:text="${choosenSpecialty}" th:value="${choosenSpecialty}"></option>
+            </select>
+        </td>
+        <td>
+            <select id="dropdown_group" th:field="*{groupName}">
+                <option th:text="${choosenGroup}" th:value="${choosenGroup}"></option>
+            </select>
+        </td>
+        <td>
+            <select id="dropdown_date" th:field="*{date}">
+                <option th:text="${choosenDate}" th:value="${choosenDate}"></option>
+            </select>
+        </td>
+        <td>
+            <select th:field="*{time}">
+                <option value="">Не выбран</option>
+                <option th:each="time : ${timeAll}"
+                        th:value="${time.lessonTimeStart +'--'+time.lessonTimeEnd}"
+                        th:utext="${time.lessonTimeStart +'--'+time.lessonTimeEnd}">
+                </option>
+            </select>
+        </td>
+        <td>
+            <select th:field="*{subjectName}">
+                <option value="">Не выбран</option>
+                <option th:each="subject : ${subjectAll}"
+                        th:value="${subject.subjectName}"
+                        th:utext="${subject.subjectName}">
+                </option>
+            </select>
+        </td>
+        <td>
+            <select th:field="*{teacherName}">
+                <option value="">Не выбран</option>
+                <option th:each="teacher : ${teacherAll}"
+                        th:value="${teacher.teacherName}"
+                        th:utext="${teacher.teacherName}">
+                </option>
+            </select>
+        </td>
+        <td>
+            <select th:field="*{classroomName}">
+                <option value="">Не выбран</option>
+                <option th:each="classroom : ${classroomAll}"
+                        th:value="${classroom.classroomNumber}"
+                        th:utext="${classroom.classroomNumber}">
+                </option>
+            </select>
+        </td>
+        <td>
+            <select th:field="*{lessonType}">
+                <option value="">Не выбран</option>
+                <option th:each="lessonT : ${lessonTypeAll}"
+                        th:value="${lessonT.lessonType}"
+                        th:utext="${lessonT.lessonType}">
+                </option>
+            </select>
+        </td>
+        <td><input type="submit" value="Submit"/></td>
+    </form>
+</table>
+<tr>
+    <td th:text="${rows.id}"></td>
+    <td th:text="${rows.facultyName}"></td>
+    <td th:text="${rows.specialtyName}"></td>
+    <td th:text="${rows.groupName}"></td>
+    <td th:text="${rows.date}"></td>
+    <td th:text="${rows.time}"></td>
+    <td th:text="${rows.subjectName}"></td>
+    <td th:text="${rows.teacherName}"></td>
+    <td th:text="${rows.classroomName}"></td>
+    <td th:text="${rows.lessonType}"></td>
+<tr/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+    function url() {
+        var value1 = $("#dropdown_faculty").val();
+        var value2 = $("#dropdown_specialty").val();
+        var value3 = $("#dropdown_group").val();
+        var link = '/admin/' + value1 + '/' + value2 + '/' + value3 + '/' + 'edit';
+        document.getElementById("search-theme-form").action = link;
+    }
+</script>
+</body>
+</html>

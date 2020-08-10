@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADMIN PAGE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>table {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+        font-size: 12px;
+        border-radius: 3px;
+        border-spacing: 0;
+        text-align: center;
+        table-layout: auto;
+    }
+
+    th {
+        background: #BCEBDD;
+        color: white;
+        text-shadow: 0 1px 1px #2D2020;
+        padding: 3px 6px;
+    }
+
+    th, td {
+        border-style: solid;
+        border-width: 0 1px 1px 0;
+        border-color: white;
+    }
+
+    th:first-child, td:first-child {
+        text-align: left;
+    }
+
+    th:first-child {
+        border-top-left-radius: 4px;
+    }
+
+    th:last-child {
+        border-top-right-radius: 4px;
+        border-right: none;
+    }
+
+    td {
+        padding: 3px 6px;
+        background: #F8E391;
+    }
+
+    tr:last-child td:first-child {
+        border-radius: 0 0 0 3px;
+    }
+
+    tr:last-child td:last-child {
+        border-radius: 0 0 3px 0;
+    }
+
+    tr td:last-child {
+        border-right: none;
+    }</style>
+</head>
+<body>
+<form th:action="@{/logaut}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Время</th>
+        <th>Предмет</th>
+        <th>Преподователь</th>
+        <th>Аудитория</th>
+        <th>Тип занятия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${rows}">
+        <td th:text="${row.time}"></td>
+        <td th:text="${row.subjectName}"></td>
+        <td th:text="${row.teacherName}"></td>
+        <td th:text="${row.classroomName}"></td>
+        <td th:text="${row.lessonType}"></td>
+    </tr>
+    <a href="/user/">back</a>
+    </tbody>
+</table>
+</body>
+</html>

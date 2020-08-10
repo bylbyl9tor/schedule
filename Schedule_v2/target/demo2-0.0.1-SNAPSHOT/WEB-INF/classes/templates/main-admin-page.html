@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADMIN PAGE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<!--<form name='f' action="#"  th:object="${schedule}" method='POST'>-->
+<table>
+    <tr>
+        <td><input id="calendar-date" type="date" value="2020-05-30"/></td>
+    </tr>
+    <tr>
+        <td>
+            <select id="dropdown_faculty">
+                <option value="">Не выбран</option>
+                <option th:each="faculty : ${facultyAll}"
+                        th:value="${faculty.facultyName}"
+                        th:utext="${faculty.facultyName}">
+                </option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <select id="dropdown_specialty">
+                <option value="">Не выбран</option>
+                <option th:each="specialty : ${specialtyAll}"
+                        th:value="${specialty.specialtyName}"
+                        th:utext="${specialty.specialtyName}">
+                </option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <select id="dropdown_group">
+                <option value="">Не выбран</option>
+                <option th:each="group : ${groupAll}"
+                        th:value="${group.groupName}"
+                        th:utext="${group.groupName}">
+                </option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <input type="submit" value="Submit" onclick="url()"/>
+    </tr>
+</table>
+<!--</form>-->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+    function url() {
+        var value1 = $("#dropdown_faculty").val();
+        var value2 = $("#dropdown_specialty").val();
+        var value3 = $("#dropdown_group").val();
+        var value4 = $("#calendar-date").val();
+        var link = '/admin/' + value1 + '/' + value2 + '/' + value3 + '/' + value4;
+        window.location.pathname = link;
+    }
+</script>
+</body>
+</html>

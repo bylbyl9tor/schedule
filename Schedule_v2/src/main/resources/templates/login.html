@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>LOGIN</title>
+</head>
+<body>
+<h3>Enter user name and password:</h3>
+<form name='f' th:action="@{/j_spring_security_check}" method='POST'>
+    <table>
+        <tr>
+            <td>User:</td>
+            <td><input type='text' name='username' value=''></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type='password' name='password' /></td>
+        </tr>
+        <tr>
+            <td><input name="submit" type="submit" value="submit" /></td>
+        </tr>
+    </table>
+</form>
+
+<ul>
+    <li>dbuser1/123</li>
+    <li>dbadmin1/123</li>
+</ul>
+
+</body>
+
+</html>
+<!--<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+</head>
+<body>
+<h1>Login page</h1>
+<p th:if="${loginError}" class="error">Wrong user or password</p>
+<form th:action="@{/login.html}" method="post">
+    <label for="username">Username</label>:
+    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+    <label for="password">Password</label>:
+    <input type="password" id="password" name="password" /> <br />
+    <input type="submit" value="Log in" />
+</form>
+</body>
+</html>-->
+<!--<!DOCTYPE html>
+<html  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>LOGIN </title>
+</head>
+<body>
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<form th:action="@{/j_spring_security_check}" method="post">
+    <div><label> User Name : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+</body>
+</html>-->
+

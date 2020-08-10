@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADMIN PAGE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="tablestyle.css">
+</head>
+<body>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<table>
+    <thead>
+    <tr>
+       <!-- <th>Факультет</th>
+        <th>Специальность</th>
+        <th>Группа</th>
+        <th>Дата</th>-->
+        <th>Время</th>
+        <th>Предмет</th>
+        <th>Преподователь</th>
+        <th>Аудитория</th>
+        <th>Тип занятия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${rows}">
+        <td th:text="${row.time}"></td>
+        <td th:text="${row.subjectName}"></td>
+        <td th:text="${row.teacherName}"></td>
+        <td th:text="${row.classroomName}"></td>
+        <td th:text="${row.lessonType}"></td>
+        <td>
+            <form th:action="@{__${#httpServletRequest.requestURI}__/delete}" method="post">
+                <input type="hidden" name="id" th:value="${row.id}"/>
+                <input type="submit" value="Delete" class="btn btn-danger"/>
+            </form>
+            <!--<a th:href="@{/delete/{id}(id=${row.id})}">delete</a>-->
+        </td>
+        <td>
+            <a th:href="@{/edit/{id}(id=${row.id})}">edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+    function url() {
+        var value1 = $("#dropdown_faculty").val();
+        var value2 = $("#dropdown_specialty").val();
+        var value3 = $("#dropdown_group").val();
+        var link = '/admin/' + value1 + '/' + value2 + '/' + value3 + '/' + 'add';
+        document.getElementById("search-theme-form").action = link;
+    }
+</script>
+</body>
+</html>

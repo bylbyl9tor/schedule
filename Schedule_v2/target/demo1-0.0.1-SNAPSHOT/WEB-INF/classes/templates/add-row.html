@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form name='f' action="#" th:action="@{/addrow}" th:object="${schedule}" method='POST'>
+    <table>
+        <tr>
+            <td>
+                <select th:field="*{facultyName1}">
+                    <option value="">Не выбран</option>
+                    <option th:each="faculty : ${facultyAll}"
+                            th:value="${faculty.facultyName}"
+                            th:utext="${faculty.facultyName}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select th:field="*{specialtyName}">
+                    <option value="">Не выбран</option>
+                    <option th:each="specialty : ${specialtyAll}"
+                            th:value="${specialty.specialtyName}"
+                            th:utext="${specialty.specialtyName}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select th:field="*{groupName}">
+                    <option value="">Не выбран</option>
+                    <option th:each="group : ${groupAll}"
+                            th:value="${group.groupName}"
+                            th:utext="${group.groupName}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select th:field="*{subjectName}">
+                    <option value="">Не выбран</option>
+                    <option th:each="subject : ${subjectAll}"
+                            th:value="${subject.subjectName}"
+                            th:utext="${subject.subjectName}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select th:field="*{teacherName}">
+                    <option value="">Не выбран</option>
+                    <option th:each="teacher : ${teacherAll}"
+                            th:value="${teacher.teacherName}"
+                            th:utext="${teacher.teacherName}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select th:field="*{classroomName}">
+                    <option value="">Не выбран</option>
+                    <option th:each="classroom : ${classroomAll}"
+                            th:value="${classroom.classroomNumber}"
+                            th:utext="${classroom.classroomNumber}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select th:field="*{lessonType}">
+                    <option value="">Не выбран</option>
+                    <option th:each="lessonT : ${lessonTypeAll}"
+                            th:value="${lessonT.lessonType}"
+                            th:utext="${lessonT.lessonType}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <!--<input type="text" th:field="*{facultyName1}" class="form-control" id="facultyName" placeholder="FacultyName">-->
+        <!--<input type="text" th:field="*{facultyName}"> &lt;!&ndash;class="form-control" id="facultyName" placeholder="FacultyName"&ndash;&gt;-->
+        <tr>
+            <td><input type="submit" class="btn btn-primary" value="add faculty"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
