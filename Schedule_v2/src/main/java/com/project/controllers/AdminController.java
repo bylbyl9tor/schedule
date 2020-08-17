@@ -2,6 +2,7 @@ package com.project.controllers;
 
 import com.project.model.*;
 import com.project.repository.*;
+import com.project.service.LessonDateService;
 import com.project.service.TimeService;
 import com.project.service.imlp.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class AdminController {
     @Autowired
     GroupServiceImpl groupService;
     @Autowired
+    LessonDateService lessonDateService;
+    @Autowired
     FacultyServiceImpl facultyService;
     @Autowired
     SpecialtyServiceImpl specialtyService;
@@ -32,30 +35,9 @@ public class AdminController {
     @Autowired
     TeacherServiceImpl teacherService;
     @Autowired
-    TestServiceImpl testService;
+    ScheduleServiceImpl scheduleService;
     @Autowired
     TimeServiceImpl timeService;
-
-    @GetMapping("/{faculty}/{specialty}/{group}/{date}")
-    public String getPutPage(@PathVariable String faculty,
-                             @PathVariable String specialty,
-                             @PathVariable String group,
-                             @PathVariable String date,
-                             Model model) {
-        model.addAttribute("rows", testService.findAllByFacultyNameAndSpecialtyNameAndGroupNameAndDate(
-                faculty, specialty, group, date));
-        model.addAttribute("choosenFaculty", faculty);
-        model.addAttribute("choosenSpecialty", specialty);
-        model.addAttribute("choosenGroup", group);
-        model.addAttribute("choosenDate", date);
-        model.addAttribute("timeAll", this.timeService.findAll());
-        model.addAttribute("subjectAll", this.subjectService.findAll());
-        model.addAttribute("teacherAll", this.teacherService.findAll());
-        model.addAttribute("classroomAll", this.classroomServiceImpl.findAllBy());
-        model.addAttribute("lessonTypeAll", this.lessonTypeService.findAll());
-        model.addAttribute("schedule", new TestScheduleTable());
-        return "table-admin";
-    }
 
     @GetMapping("/")
     public String showScheduleForAdmin(Model model) {
@@ -65,18 +47,35 @@ public class AdminController {
         model.addAttribute("facultyAll", facultyAll);
         model.addAttribute("specialtyAll", specialtyAll);
         model.addAttribute("groupAll", groupAll);
-        model.addAttribute("schedule", new TestScheduleTable());
+        model.addAttribute("schedule", new Schedule());
         return "main-admin-page";
     }
 
+    @GetMapping("/{faculty}/{specialty}/{group}/{date}")
+    public String getPutPage(@PathVariable String faculty,
+                             @PathVariable String specialty,
+                             @PathVariable String group,
+                             @PathVariable String date,
+                             Model model) {
+        model.addAttribute("rows", scheduleService.findAllByGroupAndDate(groupService.findByGroupName(group), lessonDateService.findByDateName(date)));
+        model.addAttribute("groupList", this.groupService.findByGroupName(group));
+        model.addAttribute("dateList", this.lessonDateService.findByDateName(date));
+        model.addAttribute("timeAll", this.timeService.findAll());
+        model.addAttribute("subjectAll", this.subjectService.findAll());
+        model.addAttribute("teacherAll", this.teacherService.findAll());
+        model.addAttribute("classroomAll", this.classroomServiceImpl.findAllBy());
+        model.addAttribute("lessonTypeAll", this.lessonTypeService.findAll());
+        model.addAttribute("schedule", new Schedule());
+        return "table-admin";
+    }
+
     @PostMapping(value = "/add")
-    public String putMyData(TestScheduleTable schedule) throws UnsupportedEncodingException {
-        testService.save(schedule);
-        return returnUrl("admin",
-                schedule.getFacultyName(),
-                schedule.getSpecialtyName(),
-                schedule.getGroupName(),
-                schedule.getDate());
+    public String putMyData(@ModelAttribute("schedule") Schedule schedule) throws UnsupportedEncodingException {
+        scheduleService.save(schedule);
+        return returnUrl("admin", schedule.getGroup().getSpecialty().getFaculty().getFacultyName(),
+                schedule.getGroup().getSpecialty().getSpecialtyName(),
+                schedule.getGroup().getGroupName(),
+                schedule.getDate().getDateName());
     }
 
     @GetMapping("/{faculty}/{specialty}/{group}/{date}/edit")
@@ -86,18 +85,15 @@ public class AdminController {
                               @PathVariable String date,
                               @RequestParam long id,
                               Model model) {
-        model.addAttribute("choosenFaculty", faculty);
-        model.addAttribute("choosenSpecialty", specialty);
-        model.addAttribute("choosenGroup", group);
-        model.addAttribute("choosenDate", date);
+        model.addAttribute("groupList", this.groupService.findByGroupName(group));
+        model.addAttribute("dateList", this.lessonDateService.findByDateName(date));
         model.addAttribute("timeAll", this.timeService.findAll());
         model.addAttribute("subjectAll", this.subjectService.findAll());
         model.addAttribute("teacherAll", this.teacherService.findAll());
         model.addAttribute("classroomAll", this.classroomServiceImpl.findAllBy());
         model.addAttribute("lessonTypeAll", this.lessonTypeService.findAll());
-        model.addAttribute("schedule", new TestScheduleTable());
-        TestScheduleTable row = testService.findById(id);
-        model.addAttribute("rows", row);
+        model.addAttribute("schedule", new Schedule());
+        model.addAttribute("rows", scheduleService.findById(id));
         return "edit-form";
     }
 
@@ -107,19 +103,20 @@ public class AdminController {
                        @PathVariable String group,
                        @PathVariable String date,
                        @RequestParam long id,
-                       TestScheduleTable tst) throws UnsupportedEncodingException {
-        TestScheduleTable toUpdate = testService.getOne(id);
-        toUpdate.setFacultyName(tst.getFacultyName());
-        toUpdate.setSpecialtyName(tst.getSpecialtyName());
-        toUpdate.setGroupName(tst.getGroupName());
-        toUpdate.setSubjectName(tst.getSubjectName());
-        toUpdate.setTeacherName(tst.getTeacherName());
-        toUpdate.setClassroomName(tst.getClassroomName());
+                       Schedule tst) throws UnsupportedEncodingException {
+        Schedule toUpdate = scheduleService.getOne(id);
+        toUpdate.setGroup(tst.getGroup());
+        toUpdate.setSubject(tst.getSubject());
+        toUpdate.setTeacher(tst.getTeacher());
+        toUpdate.setClassroom(tst.getClassroom());
         toUpdate.setDate(tst.getDate());
         toUpdate.setLessonType(tst.getLessonType());
-        toUpdate.setTime(tst.getTime());
-        testService.save(toUpdate);
-        return returnUrl("admin",tst.getFacultyName(),tst.getSpecialtyName(),tst.getGroupName(),tst.getDate());
+        toUpdate.setLessonTime(tst.getLessonTime());
+        scheduleService.save(toUpdate);
+        return returnUrl("admin", tst.getGroup().getSpecialty().getFaculty().getFacultyName(),
+                tst.getGroup().getSpecialty().getSpecialtyName(),
+                tst.getGroup().getGroupName(),
+                tst.getDate().getDateName());
     }
 
     @PostMapping("/{faculty}/{specialty}/{group}/{date}/delete")
@@ -128,32 +125,7 @@ public class AdminController {
                          @PathVariable String group,
                          @PathVariable String date,
                          @RequestParam long id) throws UnsupportedEncodingException {
-        testService.deleteById(id);
+        scheduleService.deleteById(id);
         return returnUrl("admin", faculty, specialty, group, date);
     }
-
-    /*@RequestMapping(value = "/json/{faculty}/{specialty}/{group}", method = RequestMethod.GET)
-    @ResponseBody
-    public List<TestScheduleTable> getMyData(@PathVariable String faculty,
-                                             @PathVariable String specialty,
-                                             @PathVariable String group) {
-        List<TestScheduleTable> scheduleTables = testRepository
-                .findAllByFacultyNameAndSpecialtyNameAndGroupNameAndDate(faculty, specialty, group);
-        return scheduleTables;
-    }*/
-
-    /*    @RequestMapping(value="/editsave/{id}",method = RequestMethod.POST)
-        public String editsave(@PathVariable(name="id")long id, Model model){
-           testRepository.update(id);
-            return "redirect:/viewemp";
-        }*/
-    /* @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TestScheduleTable> putMyData( TestScheduleTable schedule) {
-        testRepository.save(schedule);
-        URI uriNew = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/login")
-                .buildAndExpand().toUri();
-        return ResponseEntity.created(uriNew).body(schedule);
-
-    }*/
 }

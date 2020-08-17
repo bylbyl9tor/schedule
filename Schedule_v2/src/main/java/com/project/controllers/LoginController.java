@@ -19,7 +19,7 @@ public class LoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logoutSuccessfulPage(Model model) {
         //model.addAttribute("title", "Logout");
-        return "login";
+        return "redirect:/login";
     }
 
     @RequestMapping("/default")

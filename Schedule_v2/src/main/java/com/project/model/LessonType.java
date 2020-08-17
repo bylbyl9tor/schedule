@@ -9,23 +9,23 @@ import java.util.Set;
 public class LessonType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(name = "lesson_type", length = 25, nullable = false)
     private String lessonType;
 
     public LessonType() {
     }
 
-    public LessonType(int id, String lessonType) {
+    public LessonType(long id, String lessonType) {
         this.id = id;
         this.lessonType = lessonType;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -36,7 +36,8 @@ public class LessonType {
     public void setLessonType(String lessonType) {
         this.lessonType = lessonType;
     }
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "lessonType")//faculty->specialty
+
+    /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "lessonType")//faculty->specialty
     private Set<Schedule> Schedule;
 
     public Set<com.project.model.Schedule> getSchedule() {
@@ -45,5 +46,5 @@ public class LessonType {
 
     public void setSchedule(Set<com.project.model.Schedule> schedule) {
         Schedule = schedule;
-    }
+    }*/
 }

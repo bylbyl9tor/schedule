@@ -19,4 +19,9 @@ public class TimeServiceImpl implements TimeService {
         List<LessonTime> times = timeRepository.findAll();
         return times;
     }
+
+    @Override
+    public LessonTime findByLessonTimeStartAndLessonTimeEnd(String start, String end) {
+        return timeRepository.findByLessonTimeStartAndLessonTimeEnd(start, end);
+    }
 }

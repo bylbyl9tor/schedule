@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface LessonTypeService {
     List<LessonType> findAll();
+
+    LessonType findByLessonType(String lessonType);
 }

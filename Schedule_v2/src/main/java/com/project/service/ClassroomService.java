@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ClassroomService {
     List<Classroom> findAllBy();
+
+    Classroom findByClassroomNumber(String classroomNumber);
 }

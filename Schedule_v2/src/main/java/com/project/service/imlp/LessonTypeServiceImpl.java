@@ -20,4 +20,9 @@ public class LessonTypeServiceImpl implements LessonTypeService {
         List<LessonType> lessonTypes = lessonTypeRepository.findAll();
         return lessonTypes;
     }
+
+    @Override
+    public LessonType findByLessonType(String lessonType) {
+        return lessonTypeRepository.findByLessonType(lessonType);
+    }
 }

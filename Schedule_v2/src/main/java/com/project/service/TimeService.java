@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface TimeService {
     List<LessonTime> findAll();
+
+    LessonTime findByLessonTimeStartAndLessonTimeEnd(String start, String end);
 }

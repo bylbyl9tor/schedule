@@ -1,6 +1,7 @@
 package com.project.service.imlp;
 
 import com.project.model.Group;
+import com.project.model.Specialty;
 import com.project.repository.GroupRepository;
 import com.project.service.GroupService;
 import org.aspectj.lang.annotation.SuppressAjWarnings;
@@ -14,10 +15,20 @@ public class GroupServiceImpl implements GroupService {
     @Autowired
     GroupRepository groupRepository;
 
-
+    @Override
     public Group findByGroupName(String groupName) {
         Group group = groupRepository.findByGroupName(groupName);
         return group;
+    }
+
+    public Group returnGroupObjectByParams(String facultyName, String specialtyName, String groupName) {
+        Group returnedObject = groupRepository
+                .findByGroupNameAndSpecialtySpecialtyNameAndSpecialtyFacultyFacultyName(groupName, specialtyName, facultyName);
+        return returnedObject;
+    }
+
+    public Group returnGroupObjectByGroupName(String groupName) {
+        return groupRepository.findByGroupName(groupName);
     }
 
     @Override

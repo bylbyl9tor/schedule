@@ -14,9 +14,4 @@ public class Applications extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
         return builder.sources(Applications.class);
     }
-   /* @Override
-    public void run(String... args) throws Exception {
-        GroupRepository gr=null;
-        System.out.println( gr.findByGroupName("ПМ-1").getGroupName());
-    }*/
 }

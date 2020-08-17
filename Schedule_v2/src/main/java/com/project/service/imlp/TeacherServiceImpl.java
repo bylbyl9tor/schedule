@@ -18,4 +18,9 @@ public class TeacherServiceImpl implements TeacherService {
         List<Teacher> teachers = teacherRepository.findAll();
         return teachers;
     }
+
+    @Override
+    public Teacher findByTeacherName(String teacherName) {
+        return teacherRepository.findByTeacherName(teacherName);
+    }
 }

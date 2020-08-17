@@ -1,5 +1,6 @@
 package com.project.service.imlp;
 
+import com.project.model.Group;
 import com.project.model.Specialty;
 import com.project.repository.SpecialtyRepository;
 import com.project.service.SpecialtyService;

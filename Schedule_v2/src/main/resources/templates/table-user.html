@@ -56,7 +56,7 @@
     }</style>
 </head>
 <body>
-<form th:action="@{/logaut}" method="post">
+<form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
 <table>
@@ -71,11 +71,11 @@
     </thead>
     <tbody>
     <tr th:each="row : ${rows}">
-        <td th:text="${row.time}"></td>
-        <td th:text="${row.subjectName}"></td>
-        <td th:text="${row.teacherName}"></td>
-        <td th:text="${row.classroomName}"></td>
-        <td th:text="${row.lessonType}"></td>
+        <td th:text="${row.lessonTime.lessonTimeStart+'<->'+row.lessonTime.lessonTimeEnd}"></td>
+        <td th:text="${row.subject.subjectName}"></td>
+        <td th:text="${row.teacher.teacherName}"></td>
+        <td th:text="${row.classroom.classroomNumber}"></td>
+        <td th:text="${row.lessonType.lessonType}"></td>
     </tr>
     <a href="/user/">back</a>
     </tbody>

@@ -8,23 +8,23 @@ import java.util.Set;
 public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(name = "classroom_number", length = 7)
     private String classroomNumber;
 
     public Classroom() {
     }
 
-    public Classroom(int id, String classroomNumber) {
+    public Classroom(long id, String classroomNumber) {
         this.id = id;
         this.classroomNumber = classroomNumber;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -36,7 +36,7 @@ public class Classroom {
         this.classroomNumber = classroomNumber;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "classroom")
+   /* @OneToMany(fetch = FetchType.EAGER, mappedBy = "classroom")
     private Set<Schedule> schedule;
 
     public Set<Schedule> getSchedule() {
@@ -45,5 +45,5 @@ public class Classroom {
 
     public void setSchedule(Set<Schedule> schedule) {
         this.schedule = schedule;
-    }
+    }*/
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="scheduledb@localhost" uuid="c06d7f59-6cc7-456a-b20d-81c1d0ee59da">
+    <data-source source="LOCAL" name="scheduledbnew@localhost" uuid="1b1cb0bf-c690-4123-a7cd-7b735389991f">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/scheduledb</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/scheduledbnew</jdbc-url>
       <driver-properties>
         <property name="serverTimezone" value="UTC" />
       </driver-properties>

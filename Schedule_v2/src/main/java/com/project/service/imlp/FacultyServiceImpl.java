@@ -20,4 +20,14 @@ public class FacultyServiceImpl implements FacultyService {
         List<Faculty> facultys = facultyRepository.findAll();
         return facultys;
     }
+
+    public void save(Faculty faculty) {
+        facultyRepository.save(faculty);
+    }
+
+    @Override
+    public Faculty findByFacultyName(String facultyName) {
+        Faculty faculty = facultyRepository.findByFacultyName(facultyName);
+        return faculty;
+    }
 }

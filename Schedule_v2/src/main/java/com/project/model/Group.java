@@ -2,29 +2,31 @@ package com.project.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "group_table")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(name = "group_name", nullable = false)
     private String groupName;
 
-    protected Group() {
+    public Group() {
     }
 
-    public Group(int id, String groupName) {
+    public Group(long id, String groupName, Specialty specialty) {
         this.id = id;
         this.groupName = groupName;
+        this.specialty = specialty;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -48,16 +50,16 @@ public class Group {
         this.specialty = specialty;
     }
 
-    @ManyToMany(mappedBy = "scheduleGroup")
-    private Collection<Schedule> scheduleGroup;
+   /* @OneToMany(fetch = FetchType.EAGER, mappedBy = "group")
+    private Set<Schedule> schedule;
 
-    public Collection<Schedule> getScheduleGroup() {
-        return scheduleGroup;
+    public Set<Schedule> getSchedule() {
+        return schedule;
     }
 
-    public void setScheduleGroup(Collection<Schedule> scheduleGroup) {
-        this.scheduleGroup = scheduleGroup;
-    }
+    public void setSchedule(Set<Schedule> schedule) {
+        this.schedule = schedule;
+    }*/
 
     @Override
     public String toString() {

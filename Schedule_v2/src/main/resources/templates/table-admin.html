@@ -56,7 +56,7 @@
     }</style>
 </head>
 <body>
-<form th:action="@{/logaut}" method="post">
+<form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>
 <table>
@@ -83,68 +83,89 @@
             <!--<td>
                 <p>ID</p>
             </td>-->
-            <td>
-                <select id="dropdown_faculty" th:field="*{facultyName}">
+           <!-- <td>
+                <select id="dropdown_faculty" th:field="*{group.specialty.faculty.facultyName}">
                     <option th:text="${choosenFaculty}" th:value="${choosenFaculty}"></option>
                 </select>
             </td>
             <td>
-                <select id="dropdown_specialty" th:field="*{specialtyName}">
+                <select id="dropdown_specialty" th:field="*{group.specialty.specialtyName}">
                     <option th:text="${choosenSpecialty}" th:value="${choosenSpecialty}"></option>
                 </select>
-            </td>
+            </td>-->
             <td>
-                <select id="dropdown_group" th:field="*{groupName}">
-                    <option th:text="${choosenGroup}" th:value="${choosenGroup}"></option>
+                <select id="dropdown_group" th:field="*{group}">
+                    <option th:text="${groupList.groupName}" th:value="${groupList.id}"></option>
                 </select>
             </td>
             <td>
                 <select id="dropdown_date" th:field="*{date}">
-                    <option th:text="${choosenDate}" th:value="${choosenDate}"></option>
+                    <option th:text="${dateList.dateName}" th:value="${dateList.id}"></option>
                 </select>
             </td>
             <td>
-                <select th:field="*{time}">
+                <select id="dropdown_lesson_time" th:field="*{lessonTime}">
+<!--
                     <option value="">Не выбран</option>
+-->
                     <option th:each="time : ${timeAll}"
-                            th:value="${time.lessonTimeStart +'--'+time.lessonTimeEnd}"
-                            th:utext="${time.lessonTimeStart +'--'+time.lessonTimeEnd}">
+                            th:value="${time.id}"
+                            th:text="${time.lessonTimeStart+' '+time.lessonTimeEnd}">
+                    </option>
+                </select>
+            </td>
+          <!--  <td>
+                <select th:field="*{lessonTime.lessonTimeEnd}">
+&lt;!&ndash;
+                    <option value="">Не выбран</option>
+&ndash;&gt;
+                    <option th:each="time : ${timeAll}"
+                            th:value="${time.lessonTimeEnd}"
+                            th:utext="${time.lessonTimeEnd}">
+                    </option>
+                </select>
+            </td>-->
+            <td>
+                <select id="dropdown_subject" th:field="*{subject}">
+<!--
+                    <option value="">Не выбран</option>
+-->
+                    <option th:each="subj : ${subjectAll}"
+                            th:value="${subj.id}"
+                            th:text="${subj.subjectName}">
                     </option>
                 </select>
             </td>
             <td>
-                <select th:field="*{subjectName}">
+                <select id="dropdown_teacher" th:field="*{teacher}">
+<!--
                     <option value="">Не выбран</option>
-                    <option th:each="subject : ${subjectAll}"
-                            th:value="${subject.subjectName}"
-                            th:utext="${subject.subjectName}">
+-->
+                    <option th:each="teach : ${teacherAll}"
+                            th:value="${teach.id}"
+                            th:text="${teach.teacherName}">
                     </option>
                 </select>
             </td>
             <td>
-                <select th:field="*{teacherName}">
+                <select id="dropdown_classroom" th:field="*{classroom}">
+<!--
                     <option value="">Не выбран</option>
-                    <option th:each="teacher : ${teacherAll}"
-                            th:value="${teacher.teacherName}"
-                            th:utext="${teacher.teacherName}">
-                    </option>
-                </select>
-            </td>
-            <td>
-                <select th:field="*{classroomName}">
-                    <option value="">Не выбран</option>
-                    <option th:each="classroom : ${classroomAll}"
-                            th:value="${classroom.classroomNumber}"
-                            th:utext="${classroom.classroomNumber}">
+-->
+                    <option th:each="class : ${classroomAll}"
+                            th:value="${class.id}"
+                            th:text="${class.classroomNumber}">
                     </option>
                 </select>
             </td>
             <td>
                 <select th:field="*{lessonType}">
+<!--
                     <option value="">Не выбран</option>
+-->
                     <option th:each="lessonT : ${lessonTypeAll}"
-                            th:value="${lessonT.lessonType}"
-                            th:utext="${lessonT.lessonType}">
+                            th:value="${lessonT.id}"
+                            th:text="${lessonT.lessonType}">
                     </option>
                 </select>
             </td>
@@ -152,15 +173,16 @@
         </form>
     </tr>
     <tr th:each="row : ${rows}">
-        <td th:text="${row.facultyName}"></td>
-        <td th:text="${row.specialtyName}"></td>
-        <td th:text="${row.groupName}"></td>
-        <td th:text="${row.date}"></td>
-        <td th:text="${row.time}"></td>
-        <td th:text="${row.subjectName}"></td>
-        <td th:text="${row.teacherName}"></td>
-        <td th:text="${row.classroomName}"></td>
-        <td th:text="${row.lessonType}"></td>
+        <td th:text="${row.group.specialty.faculty.facultyName}"></td>
+        <td th:text="${row.group.specialty.specialtyName}"></td>
+        <td th:text="${row.group.groupName}"></td>
+        <td th:text="${row.date.dateName}"></td>
+        <td th:text="${row.lessonTime.lessonTimeStart}"></td>
+        <td th:text="${row.lessonTime.lessonTimeEnd}"></td>
+        <td th:text="${row.subject.subjectName}"></td>
+        <td th:text="${row.teacher.teacherName}"></td>
+        <td th:text="${row.classroom.classroomNumber}"></td>
+        <td th:text="${row.lessonType.lessonType}"></td>
         <td>
             <form th:action="@{__${#httpServletRequest.requestURI}__/delete}" method="post">
                 <input type="hidden" name="id" th:value="${row.id}"/>
@@ -177,16 +199,17 @@
     </tr>
     </tbody>
 </table>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
     function url() {
         var value1 = $("#dropdown_faculty").val();
         var value2 = $("#dropdown_specialty").val();
         var value3 = $("#dropdown_group").val();
         var value4 = $("#dropdown_data").val();
+        var lessonTime = $("#dropdown_lesson_time").val();
         var link = '/admin/' + value1 + '/' + value2 + '/' + value3 + '/' + value4 + '/' + 'add';
         document.getElementById("search-theme-form").action = link;
     }
-</script>
+</script>-->
 </body>
 </html>

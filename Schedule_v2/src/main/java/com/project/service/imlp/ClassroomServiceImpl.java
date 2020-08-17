@@ -20,4 +20,9 @@ public class ClassroomServiceImpl implements ClassroomService {
         return classrooms;
     }
 
+    @Override
+    public Classroom findByClassroomNumber(String classroomNumber) {
+        return classroomRepository.findByClassroomNumber(classroomNumber);
+    }
+
 }

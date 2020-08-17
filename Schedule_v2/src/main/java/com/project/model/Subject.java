@@ -2,28 +2,29 @@ package com.project.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "subject_name_table")
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column(name = "subject_name", length = 45, nullable = false)
     private String subjectName;
 
     public Subject() {
     }
 
-    public Subject(int id, String subjectName) {
+    public Subject(long id, String subjectName) {
         this.id = id;
         this.subjectName = subjectName;
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -44,4 +45,14 @@ public class Subject {
     public void setSubjectSpecialty(Collection<Specialty> subjectSpecialty) {
         this.subjectSpecialty = subjectSpecialty;
     }
+   /* @OneToMany(fetch = FetchType.EAGER, mappedBy = "subject")
+    private Set<Schedule> schedule;
+
+    public Set<Schedule> getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Set<Schedule> schedule) {
+        this.schedule = schedule;
+    }*/
 }
