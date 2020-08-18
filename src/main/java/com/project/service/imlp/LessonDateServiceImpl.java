@@ -13,6 +13,9 @@ public class LessonDateServiceImpl implements LessonDateService {
 
     @Override
     public LessonDate findByDateName(String date) {
+        if (!lessonDateRepository.existsByDateName(date)) {
+            lessonDateRepository.save(new LessonDate(date));
+        }
         return lessonDateRepository.findByDateName(date);
     }
 }

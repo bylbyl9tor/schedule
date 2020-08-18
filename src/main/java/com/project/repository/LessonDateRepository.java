@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LessonDateRepository extends JpaRepository<LessonDate, Long> {
     LessonDate findByDateName(String date);
+    Boolean existsByDateName(String date);
 }

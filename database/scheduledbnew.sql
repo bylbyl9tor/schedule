@@ -100,31 +100,7 @@ LOCK TABLES `faculty_table` WRITE;
 INSERT INTO `faculty_table` VALUES (1,'матфак'),(2,'физтех'),(3,'психфак'),(4,'геофак');
 UNLOCK TABLES;
 
---
--- Table structure for table `group_table`
---
 
-DROP TABLE IF EXISTS `group_table`;
-CREATE TABLE `group_table` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `group_name` varchar(12) DEFAULT NULL,
-  `id_specialty` int NOT NULL,
-  PRIMARY KEY (`id`,`id_specialty`),
-  KEY `id_specialty` (`id_specialty`),
-  CONSTRAINT `group_table_ibfk_1` FOREIGN KEY (`id_specialty`) REFERENCES `specialty_table` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `group_table`
---
-
-LOCK TABLES `group_table` WRITE;
-INSERT INTO `group_table` VALUES (1,'ПМ-1',1),(2,'КБ-1',2),(3,'ПОИТ-1',3),(4,'ПОИТ-2',3),(5,'УИР-1',4),(6,'НПД-1',5),(7,'НПД-2',6),(8,'ПМ-2',7);
-UNLOCK TABLES;
-
---
--- Table structure for table `hibernate_sequence`
---
 
 DROP TABLE IF EXISTS `hibernate_sequence`;
 CREATE TABLE `hibernate_sequence` (
@@ -199,7 +175,151 @@ CREATE TABLE `persistent_logins` (
 
 LOCK TABLES `persistent_logins` WRITE;
 UNLOCK TABLES;
+--
+-- Table structure for table `specialty_table`
+--
 
+DROP TABLE IF EXISTS `specialty_table`;
+CREATE TABLE `specialty_table` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `specialty_name` varchar(30) DEFAULT NULL,
+  `id_faculty` int NOT NULL,
+  PRIMARY KEY (`id`,`id_faculty`),
+  KEY `id_faculty` (`id_faculty`),
+  CONSTRAINT `specialty_table_ibfk_1` FOREIGN KEY (`id_faculty`) REFERENCES `faculty_table` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `specialty_table`
+--
+
+LOCK TABLES `specialty_table` WRITE;
+INSERT INTO `specialty_table` VALUES (1,'Прикладная математика',1),(2,'Комп безоп',1),(3,'Поиты',1),(4,'уиры',1),(5,'педагоги',1),(6,'педагоги',2),(7,'пф',2);
+UNLOCK TABLES;
+--
+-- Table structure for table `group_table`
+--
+
+DROP TABLE IF EXISTS `group_table`;
+CREATE TABLE `group_table` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(12) DEFAULT NULL,
+  `id_specialty` int NOT NULL,
+  PRIMARY KEY (`id`,`id_specialty`),
+  KEY `id_specialty` (`id_specialty`),
+  CONSTRAINT `group_table_ibfk_1` FOREIGN KEY (`id_specialty`) REFERENCES `specialty_table` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `group_table`
+--
+
+LOCK TABLES `group_table` WRITE;
+INSERT INTO `group_table` VALUES (1,'ПМ-1',1),(2,'КБ-1',2),(3,'ПОИТ-1',3),(4,'ПОИТ-2',3),(5,'УИР-1',4),(6,'НПД-1',5),(7,'НПД-2',6),(8,'ПМ-2',7);
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teacher_table`
+--
+
+DROP TABLE IF EXISTS `teacher_table`;
+CREATE TABLE `teacher_table` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `teacher` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `teacher_table`
+--
+
+LOCK TABLES `teacher_table` WRITE;
+INSERT INTO `teacher_table` VALUES (1,'Иванов Иван Иванович'),(2,'иии иии иии');
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subject_name_table`
+--
+
+DROP TABLE IF EXISTS `subject_name_table`;
+CREATE TABLE `subject_name_table` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `subject_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `subject_name_table`
+--
+
+LOCK TABLES `subject_name_table` WRITE;
+INSERT INTO `subject_name_table` VALUES (1,'Мат Анализ'),(2,'ОАИП'),(3,'Физическая культура'),(4,'Диффуры'),(5,'ГИА'),(6,'Политология'),(7,'История'),(8,'ВМА');
+UNLOCK TABLES;
+--
+-- Table structure for table `specialty_subject`
+--
+
+DROP TABLE IF EXISTS `specialty_subject`;
+CREATE TABLE `specialty_subject` (
+  `id_specialty` int NOT NULL,
+  `id_subject` int NOT NULL,
+  PRIMARY KEY (`id_specialty`,`id_subject`),
+  KEY `id_subject` (`id_subject`),
+  CONSTRAINT `specialty_subject_ibfk_1` FOREIGN KEY (`id_specialty`) REFERENCES `specialty_table` (`id`),
+  CONSTRAINT `specialty_subject_ibfk_2` FOREIGN KEY (`id_subject`) REFERENCES `subject_name_table` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `specialty_subject`
+--
+
+LOCK TABLES `specialty_subject` WRITE;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teacher_subject_name`
+--
+
+DROP TABLE IF EXISTS `teacher_subject_name`;
+CREATE TABLE `teacher_subject_name` (
+  `id_teacher` int NOT NULL,
+  `id_subject` int NOT NULL,
+  PRIMARY KEY (`id_teacher`,`id_subject`),
+  KEY `id_subject` (`id_subject`),
+  CONSTRAINT `teacher_subject_name_ibfk_1` FOREIGN KEY (`id_teacher`) REFERENCES `teacher_table` (`id`),
+  CONSTRAINT `teacher_subject_name_ibfk_2` FOREIGN KEY (`id_subject`) REFERENCES `subject_name_table` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `teacher_subject_name`
+--
+
+LOCK TABLES `teacher_subject_name` WRITE;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_role`
+--
+
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
+  `ID` bigint NOT NULL,
+  `USER_ID` bigint NOT NULL,
+  `ROLE_ID` bigint NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `USER_ROLE_UK` (`USER_ID`,`ROLE_ID`),
+  KEY `USER_ROLE_FK2` (`ROLE_ID`),
+  CONSTRAINT `USER_ROLE_FK1` FOREIGN KEY (`USER_ID`) REFERENCES `app_user` (`USER_ID`),
+  CONSTRAINT `USER_ROLE_FK2` FOREIGN KEY (`ROLE_ID`) REFERENCES `app_role` (`ROLE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `user_role`
+--
+
+LOCK TABLES `user_role` WRITE;
+INSERT INTO `user_role` VALUES (1,1,1),(2,1,2),(3,2,2);
+UNLOCK TABLES;
 --
 -- Table structure for table `schedule_table`
 --
@@ -230,130 +350,3 @@ CREATE TABLE `schedule_table` (
   CONSTRAINT `schedule_table_ibfk_6` FOREIGN KEY (`id_subject`) REFERENCES `subject_name_table` (`id`),
   CONSTRAINT `schedule_table_ibfk_7` FOREIGN KEY (`id_time`) REFERENCES `lesson_time_table` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Table structure for table `specialty_subject`
---
-
-DROP TABLE IF EXISTS `specialty_subject`;
-CREATE TABLE `specialty_subject` (
-  `id_specialty` int NOT NULL,
-  `id_subject` int NOT NULL,
-  PRIMARY KEY (`id_specialty`,`id_subject`),
-  KEY `id_subject` (`id_subject`),
-  CONSTRAINT `specialty_subject_ibfk_1` FOREIGN KEY (`id_specialty`) REFERENCES `specialty_table` (`id`),
-  CONSTRAINT `specialty_subject_ibfk_2` FOREIGN KEY (`id_subject`) REFERENCES `subject_name_table` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `specialty_subject`
---
-
-LOCK TABLES `specialty_subject` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `specialty_table`
---
-
-DROP TABLE IF EXISTS `specialty_table`;
-CREATE TABLE `specialty_table` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `specialty_name` varchar(30) DEFAULT NULL,
-  `id_faculty` int NOT NULL,
-  PRIMARY KEY (`id`,`id_faculty`),
-  KEY `id_faculty` (`id_faculty`),
-  CONSTRAINT `specialty_table_ibfk_1` FOREIGN KEY (`id_faculty`) REFERENCES `faculty_table` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `specialty_table`
---
-
-LOCK TABLES `specialty_table` WRITE;
-INSERT INTO `specialty_table` VALUES (1,'Прикладная математика',1),(2,'Комп безоп',1),(3,'Поиты',1),(4,'уиры',1),(5,'педагоги',1),(6,'педагоги',2),(7,'пф',2);
-UNLOCK TABLES;
-
---
--- Table structure for table `subject_name_table`
---
-
-DROP TABLE IF EXISTS `subject_name_table`;
-CREATE TABLE `subject_name_table` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `subject_name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `subject_name_table`
---
-
-LOCK TABLES `subject_name_table` WRITE;
-INSERT INTO `subject_name_table` VALUES (1,'Мат Анализ'),(2,'ОАИП'),(3,'Физическая культура'),(4,'Диффуры'),(5,'ГИА'),(6,'Политология'),(7,'История'),(8,'ВМА');
-UNLOCK TABLES;
-
---
--- Table structure for table `teacher_subject_name`
---
-
-DROP TABLE IF EXISTS `teacher_subject_name`;
-CREATE TABLE `teacher_subject_name` (
-  `id_teacher` int NOT NULL,
-  `id_subject` int NOT NULL,
-  PRIMARY KEY (`id_teacher`,`id_subject`),
-  KEY `id_subject` (`id_subject`),
-  CONSTRAINT `teacher_subject_name_ibfk_1` FOREIGN KEY (`id_teacher`) REFERENCES `teacher_table` (`id`),
-  CONSTRAINT `teacher_subject_name_ibfk_2` FOREIGN KEY (`id_subject`) REFERENCES `subject_name_table` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `teacher_subject_name`
---
-
-LOCK TABLES `teacher_subject_name` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `teacher_table`
---
-
-DROP TABLE IF EXISTS `teacher_table`;
-CREATE TABLE `teacher_table` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `teacher` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `teacher_table`
---
-
-LOCK TABLES `teacher_table` WRITE;
-INSERT INTO `teacher_table` VALUES (1,'Иванов Иван Иванович'),(2,'иии иии иии');
-UNLOCK TABLES;
-
---
--- Table structure for table `user_role`
---
-
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE `user_role` (
-  `ID` bigint NOT NULL,
-  `USER_ID` bigint NOT NULL,
-  `ROLE_ID` bigint NOT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `USER_ROLE_UK` (`USER_ID`,`ROLE_ID`),
-  KEY `USER_ROLE_FK2` (`ROLE_ID`),
-  CONSTRAINT `USER_ROLE_FK1` FOREIGN KEY (`USER_ID`) REFERENCES `app_user` (`USER_ID`),
-  CONSTRAINT `USER_ROLE_FK2` FOREIGN KEY (`ROLE_ID`) REFERENCES `app_role` (`ROLE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `user_role`
---
-
-LOCK TABLES `user_role` WRITE;
-INSERT INTO `user_role` VALUES (1,1,1),(2,1,2),(3,2,2);
-UNLOCK TABLES;

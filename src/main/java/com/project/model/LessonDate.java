@@ -13,8 +13,7 @@ public class LessonDate {
 
     public LessonDate() {
     }
-    public LessonDate(long id,String dateName) {
-        this.id=id;
+    public LessonDate(String dateName) {
         this.dateName=dateName;
     }
 
