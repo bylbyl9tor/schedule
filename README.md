@@ -18,7 +18,7 @@ With it, you can set the schedule from the admin side and view it from the user 
 Instructions on how to obtain a copy of this software and run it on a local computer for development and testing purposes.  
 
 # What you need to install the software
-** JDK 6 and up, Maven 3.0+, MySQL Workbench 8.0 CE **
+**JDK 6 and up, Maven 3.0+, MySQL Workbench 8.0 CE **
 # Installation  
 
 * Download the zip or clone the Git repository.  
