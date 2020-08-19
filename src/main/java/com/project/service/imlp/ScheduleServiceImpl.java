@@ -9,6 +9,7 @@ import com.project.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> findAllByGroupAndDate(Group group, LessonDate lessonDate) {
         List<Schedule> scheds = scheduleRepository.findAllByGroupAndDate(group, lessonDate);
-
+        Collections.sort(scheds);
         return scheds;
     }
 }

@@ -65,8 +65,8 @@
         <!--
                 <th>id</th>
         -->
-        <th>Факультет</th>
-        <th>Специальность</th>
+        <!--<th>Факультет</th>
+        <th>Специальность</th>-->
         <th>Группа</th>
         <th>Дата</th>
         <th>Время</th>
@@ -173,12 +173,11 @@
         </form>
     </tr>
     <tr th:each="row : ${rows}">
-        <td th:text="${row.group.specialty.faculty.facultyName}"></td>
-        <td th:text="${row.group.specialty.specialtyName}"></td>
+        <!--<td th:text="${row.group.specialty.faculty.facultyName}"></td>
+        <td th:text="${row.group.specialty.specialtyName}"></td>-->
         <td th:text="${row.group.groupName}"></td>
         <td th:text="${row.date.dateName}"></td>
-        <td th:text="${row.lessonTime.lessonTimeStart}"></td>
-        <td th:text="${row.lessonTime.lessonTimeEnd}"></td>
+        <td th:text="${row.lessonTime.lessonTimeStart+'<->'+row.lessonTime.lessonTimeEnd}"></td>
         <td th:text="${row.subject.subjectName}"></td>
         <td th:text="${row.teacher.teacherName}"></td>
         <td th:text="${row.classroom.classroomNumber}"></td>

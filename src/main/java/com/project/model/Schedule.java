@@ -7,7 +7,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "schedule_table")
-public class Schedule {
+public class Schedule implements Comparable<Schedule> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -117,5 +117,32 @@ public class Schedule {
 
     public void setLessonType(LessonType lessonType) {
         this.lessonType = lessonType;
+    }
+
+
+
+    @Override
+    public int compareTo(Schedule schedule) {
+        if (this.lessonTime.getLessonTimeStart() == schedule.lessonTime.getLessonTimeStart()) {
+            return 0;
+        } else if (stringСomparison(this.lessonTime.getLessonTimeStart(), schedule.lessonTime.getLessonTimeStart())) {
+            return -1;
+        } else return 1;
+    }
+
+     /*stringСomparison ужен только для compareTo; stringСomparison не использует == т.к. если строки равны то compareTo
+        вернёт 0 и stringСomparison не вызовется*/
+
+    public boolean stringСomparison(String str1, String str2) {
+        char[] mas1 = str1.toCharArray();
+        char[] mas2 = str2.toCharArray();
+        for (int i = 0; i < mas1.length; i++) {
+            if (mas1[i] == mas2[i]) {
+                continue;
+            } else if (mas1[i] < mas2[i]) {
+                return true;
+            }else return false;
+        }
+        return false;
     }
 }
