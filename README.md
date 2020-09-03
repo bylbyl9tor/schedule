@@ -67,5 +67,4 @@ If everything works correctly, then under the form with the login there should b
 * /database/ -contains sql database script  
 
 # About database
-![alt text](https://prnt.sc/ub4rho "Описание будет тут")
-https://prnt.sc/ub4rho
+![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseERDiagramm.png)
