@@ -68,3 +68,4 @@ If everything works correctly, then under the form with the login there should b
 
 # About database
 ![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseERDiagramm.png)
+![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseLogiSkreen.png)
