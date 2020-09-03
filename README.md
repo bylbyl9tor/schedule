@@ -65,3 +65,7 @@ If everything works correctly, then under the form with the login there should b
 * /pom.xml - contains all the project dependencies  
 
 * /database/ -contains sql database script  
+
+# About database
+![alt text](https://prnt.sc/ub4rho "Описание будет тут")
+https://prnt.sc/ub4rho
