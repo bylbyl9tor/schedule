@@ -67,5 +67,7 @@ If everything works correctly, then under the form with the login there should b
 * /database/ -contains sql database script  
 
 # About database
+ER Diagramm for main tables in schedule
 ![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseERDiagramm.png)
+ER Diagramm for login and roles tables
 ![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseLogiSkreen.png)
