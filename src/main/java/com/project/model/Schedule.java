@@ -119,8 +119,6 @@ public class Schedule implements Comparable<Schedule> {
         this.lessonType = lessonType;
     }
 
-
-
     @Override
     public int compareTo(Schedule schedule) {
         if (this.lessonTime.getLessonTimeStart() == schedule.lessonTime.getLessonTimeStart()) {

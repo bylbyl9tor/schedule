@@ -3,6 +3,7 @@ package com.project.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -17,13 +18,12 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @PostMapping("/logout")
     public String logoutSuccessfulPage(Model model) {
-        //model.addAttribute("title", "Logout");
         return "redirect:/login";
     }
 
-    @RequestMapping("/default")
+    @GetMapping("/default")
     public String defaultAfterLogin(HttpServletRequest request) {
         if (request.isUserInRole("ROLE_ADMIN")) {
             return "redirect:/admin/";

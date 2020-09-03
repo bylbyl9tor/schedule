@@ -1,6 +1,5 @@
 package com.project.service.imlp;
 
-import com.project.model.Faculty;
 import com.project.model.Group;
 import com.project.model.LessonDate;
 import com.project.model.Schedule;
@@ -9,8 +8,8 @@ import com.project.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -43,8 +42,31 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void save(Schedule testScheduleTable) {
-        scheduleRepository.save(testScheduleTable);
+    public void save(Schedule schedule) {
+        if (this.checkRow(schedule)) {
+            scheduleRepository.save(schedule);
+        } else {
+
+        }
+
+    }
+
+    public boolean checkRow(Schedule schedule) {
+        Iterator<Schedule> iterator = findAllByGroupAndDate(schedule.getGroup(), schedule.getDate()).iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getLessonTime().equals(schedule.getLessonTime())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void update(Schedule newSchedule, long id) {
+        if (this.checkRow(newSchedule)) {
+            newSchedule.setId(id);
+            scheduleRepository.save(newSchedule);
+        }
     }
 
     @Override

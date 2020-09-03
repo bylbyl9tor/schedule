@@ -41,12 +41,9 @@ public class AdminController {
 
     @GetMapping("/")
     public String showScheduleForAdmin(Model model) {
-        Collection<Faculty> facultyAll = this.facultyService.findAll();
-        Collection<Specialty> specialtyAll = this.specialtyService.findAll();
-        Collection<Group> groupAll = this.groupService.findAllBy();
-        model.addAttribute("facultyAll", facultyAll);
-        model.addAttribute("specialtyAll", specialtyAll);
-        model.addAttribute("groupAll", groupAll);
+        model.addAttribute("facultyAll", this.facultyService.findAll());
+        model.addAttribute("specialtyAll", this.specialtyService.findAll());
+        model.addAttribute("groupAll", this.groupService.findAllBy());
         model.addAttribute("schedule", new Schedule());
         return "main-admin-page";
     }
@@ -69,7 +66,7 @@ public class AdminController {
         return "table-admin";
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping("/add")
     public String putMyData(@ModelAttribute("schedule") Schedule schedule) throws UnsupportedEncodingException {
         scheduleService.save(schedule);
         return returnUrl("admin", schedule.getGroup().getSpecialty().getFaculty().getFacultyName(),
@@ -97,22 +94,14 @@ public class AdminController {
         return "edit-form";
     }
 
-    @PostMapping(value = "/{faculty}/{specialty}/{group}/{date}/edit")
+    @PostMapping("/{faculty}/{specialty}/{group}/{date}/edit")
     public String edit(@PathVariable String faculty,
                        @PathVariable String specialty,
                        @PathVariable String group,
                        @PathVariable String date,
                        @RequestParam long id,
                        Schedule tst) throws UnsupportedEncodingException {
-        Schedule toUpdate = scheduleService.getOne(id);
-        toUpdate.setGroup(tst.getGroup());
-        toUpdate.setSubject(tst.getSubject());
-        toUpdate.setTeacher(tst.getTeacher());
-        toUpdate.setClassroom(tst.getClassroom());
-        toUpdate.setDate(tst.getDate());
-        toUpdate.setLessonType(tst.getLessonType());
-        toUpdate.setLessonTime(tst.getLessonTime());
-        scheduleService.save(toUpdate);
+        scheduleService.update(tst, id);
         return returnUrl("admin", tst.getGroup().getSpecialty().getFaculty().getFacultyName(),
                 tst.getGroup().getSpecialty().getSpecialtyName(),
                 tst.getGroup().getGroupName(),

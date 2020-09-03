@@ -20,5 +20,7 @@ public interface ScheduleService {
 
     void save(Schedule schedule);
 
+    void update(Schedule schedule,long id);
+
     List<Schedule> findAllByGroupAndDate(Group group, LessonDate date);
 }
