@@ -69,7 +69,9 @@ If everything works correctly, then under the form with the login there should b
 # About database
 ER Diagramm for main tables in schedule  
 
-![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseERDiagramm.png)
+![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseERDiagramm.png)</br>  
+
 ER Diagramm for login and roles tables  
 
-![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseLogiSkreen.png)
+![](https://github.com/bylbyl9tor/schedule/blob/master/DatabaseLogiSkreen.png)  
+
